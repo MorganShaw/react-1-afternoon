@@ -10,14 +10,12 @@ class EvenAndOdd extends Component {
         }
     }
 
-    handleChange(val){
-        console.log("EVENT OBJECT", val);
-        this.setState({ userInput: val });
+    handleChange(e){
+        console.log("EVENT OBJECT", e.target.value);
+        this.setState({ userInput: e.target.value });
        }
     
     assignEvenAndOdds(userInput){
-    
-         
         let arr1 = userInput.split('').filter((elem) => {
             return elem % 2 === 0;
         })
