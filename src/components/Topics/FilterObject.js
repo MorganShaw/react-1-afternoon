@@ -23,29 +23,76 @@ class FilterObject extends Component {
             userInput: "",
             filteredArray: []
         }
+
+        this.handleChange = this.handleChange.bind(this)
         
     }
 
 
-
-    updateFilteredArray = () => {
-        // let newArr = [];
+    
+    handleChange(value) {
         this.setState({
-            // filteredArray: event.target.value
+            userInput: value
+        })
+       
+    }
+//How do I change this for loop into a .map or something??
+
+    updateFilteredArray = (prop) => {
+        let books = this.state.books
+        // let filteredArray = books.map((prop, i) => {
+        //     if(books[i].hasOwnProperty(prop)) {
+        //         filteredArray.push(books[i]);
+        //     }
+        // })
+        let filteredArray = [];
+
+        for(let i = 0; i < books.length; i++) {
+            if (books[i].hasOwnProperty(prop)) {
+                filteredArray.push(books[i])
+            }
+        }
+        this.setState({
+            filteredArray: filteredArray
+        })
+        this.setState({
+            userInput: ""
         })
     }
-    
+
     render() {
         return (
             <div className="puzzleBox filterObjectPB">
                 <h4>Filter Object</h4>
-                <span className="puzzleText" value={this.state.unFilteredArray}></span>
-                <input className="inputLine" onChange={this.state.userInput}/>
-                <button className="confirmationButton" onClick={(e) => this.state.updateFilteredArray(e)}>Filter</button>
-                <span className="resultsBox filterObjectPB" value={this.state.filteredArray}></span>
+                <span className="puzzleText" >Original: { JSON.stringify(this.state.unFilteredArray)}</span>
+                <input className="inputLine" onChange={ (e) => this.handleChange(e.target.value)} placeholder="Enter Text Here"/>
+                <button className="confirmationButton" onClick={() => this.updateFilteredArray(this.state.userInput)}>Filter</button>
+                <span className="resultsBox filterObjectPB">Filtered: { JSON.stringify(this.state.filteredArray)}</span>
             </div>
         )
     }
 }
 
 export default FilterObject;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
