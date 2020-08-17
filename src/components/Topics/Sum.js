@@ -4,40 +4,45 @@ class Sum extends Component {
     constructor(){
         super();
         this.state = {
-            number1: 0,
-            number2: 0,
+            number1: '',
+            number2: '',
             sum: null
         }
     }
 
-
-    // updateNumber1(e){
+    handleChange = (e) => {
+        console.log(e.target);
+        this.setState({
+            [e.target.name]: e.target.value
+        })
+    }
+//This one works as a universal change handler (if you pass in e.target.name and e.target.value when the function is invoked in the onChange on the input tag):
+    // handleChange = (value, name) => {
+    //     console.log(value, name);
     //     this.setState({
-    //         [e.target.name]: e.target.value
+    //         [name]: value
     //     })
     // }
 
-    updateNumber1(val){
-        this.setState({
-            number1: parseInt(val, 10)
-        })
-    }
+    // FROM SOLUTION CODE - two functions to update number1 and number2 separately:
+    // updateNumber1(val){
+    //     this.setState({
+    //         number1: parseInt(val, 10)
+    //     })
+    // }
     
-    // updateNumber2(e){
+    // updateNumber2(val){
     //     this.setState({
-    //         [e.target.name]: e.target.value
+    //         number2: parseInt(val, 10)
     //     })
     // }
-    updateNumber2(val){
-        this.setState({
-            number2: parseInt(val, 10)
-        })
-    }
 
     addNumbers = (num1, num2) => {
-        const newSum = num1 + num2;
+        const newSum = +num1 + (+num2);
         this.setState({
-            sum: newSum
+            sum: newSum,
+            number1: '',
+            number2: ''
         })
     }
     //How would I clear the input boxes after clicking sum? this.setState didn't work.
@@ -47,8 +52,8 @@ class Sum extends Component {
         return (
             <div className="puzzleBox sumPB">
                 <h4>Sum</h4>
-                <input onChange={(e) => this.updateNumber1(e.target.value)} className='inputLine'></input>
-                <input onChange={(e) => this.updateNumber2(e.target.value)} className='inputLine'></input>
+                <input name='number1' value={number1} onChange={(e) => this.handleChange(e)} className='inputLine'></input>
+                <input name='number2' value={number2} onChange={(e) => this.handleChange(e)} className='inputLine'></input>
                 <button onClick={() => this.addNumbers(number1, number2)} className='confirmationButton'>Add</button>
                 <span className='resultsBox'>Sum: {sum}</span>
             </div>
